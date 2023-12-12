@@ -1,0 +1,27 @@
+{
+    "[dart]": {
+      "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.organizeImports": true,
+        "source.addMissingImports": true
+      },
+      "editor.defaultFormatter": "Dart-Code.dart-code",
+      "editor.formatOnPaste": true,
+      "editor.formatOnSave": true,
+      "editor.tabSize": 2
+    },
+    "[json]": {
+      "editor.formatOnPaste": true,
+      "editor.formatOnSave": true,
+      "editor.tabSize": 2,
+      "files.insertFinalNewline": true
+    },
+    "[markdown]": {
+      "editor.formatOnPaste": true,
+      "editor.formatOnSave": true,
+      "editor.tabSize": 2,
+    },
+    "build-runner.flutterPath": ".fvm/flutter_sdk/bin/flutter",
+    "dart.flutterSdkPath": ".fvm/flutter_sdk",
+    "dart.sdkPath": ".fvm/flutter_sdk"
+  }
