@@ -1,9 +1,9 @@
 {
     "[dart]": {
       "editor.codeActionsOnSave": {
-        "source.fixAll": true,
-        "source.organizeImports": true,
-        "source.addMissingImports": true
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit",
+        "source.addMissingImports": "explicit"
       },
       "editor.defaultFormatter": "Dart-Code.dart-code",
       "editor.formatOnPaste": true,
