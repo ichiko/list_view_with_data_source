@@ -1,5 +1,5 @@
 name: list_view_with_data_source
-description: "A new Flutter package project."
+description: "Build ListView via DataSource that separated from UI"
 version: 0.0.1
 
 environment:

@@ -1,26 +1,29 @@
 # list_view_with_data_source
 
+
+
 A Flutter `ListView` in which list items, header, footer and separators build from section and item structured in DataSource.
 
-## About
+## 概要
 
-This package abstracts the construction of elements to be displayed in a ListView, making it easier to manage. It's useful when arranging a variable number of multiple types of items. Also, by grouping elements with the concept of Sections, you can display different separators for each group and freely insert headers/footers.
+このパッケージは、ListViewに表示する要素の構築を抽象化し、管理しやすくするものです。複数の種類のアイテムを可変な個数で並べるときに便利です。
+また、Section の概念で要素グルーピングすることで、グループごとに異なるセパレータを表示したり、ヘッダー/フッターを自由に挿入することができます。
 
-It's inspired by `UICollectionViewDataSource` from UIKit.
+UIKit の `UICollectionViewDataSource` の考え方を取り入れたものです。
 
-The differences from [grouped_list](https://pub.dev/packages/grouped_list), which makes it easy to build groups from data, are as follows:
+データからグループの構築を簡単にできる [grouped_list](https://pub.dev/packages/grouped_list) との違いは、以下です。
 
-- By not automating group construction, it can express more complex switches
-- Headers/footers/group separator Widgets can be set individually
-- By separating the display structure and Widget construction, the structure itself can be verified
+- グループ構築を自動化しないことで、より複雑の切り替えを表現できる
+- ヘッダー/フッター/グループのセパレータ Widget を個別に設定できる
+- 表示の構造と Widget 構築を分離することで、構造自体の検証ができる
 
-## Example
+## 使い方
 
-This is an example of changing the items displayed based on the number of data entries per group.
+グループごとのデータ件数によって、表示する項目を変更する例です。
 
-The full text of this sample can be seen in `example/lib/main/dart`.
+このサンプルの全文は、 `example/lib/main/dart` で見れます。
 
-1. First, define the Sections and Items to be stored in the DataSource. It's a good idea to match these with the types of Views.
+1. まずDataSourceに格納する、Section と Item を定義します。これはViewの種類に対応させるとよいでしょう。
   ```
   class ProjectSection extends Equatable {
     const ProjectSection({
@@ -59,7 +62,7 @@ The full text of this sample can be seen in `example/lib/main/dart`.
     String get title => 'No tasks';
   }
   ```
-2. Next, according to the data, fill the prepared Sections and Items into the `ListViewDataSource`.
+2. 次にデータに応じて、用意した Section と Item を `ListViewDataSource` に詰めていきます。
   ```
   final dataSource = CustomDataSource();
   for (final project in projects) {
@@ -75,7 +78,7 @@ The full text of this sample can be seen in `example/lib/main/dart`.
     }
   }
   ```
-3. Place the `ListViewWithDataSource` Widget on the screen and start building the View.
+3. `ListViewWithDataSource` Widget を screen に配置して、View を構築していきます。
   ```
   ListViewWithDataSource(
     dataSource: _model.dataSourceFor(_filter),
