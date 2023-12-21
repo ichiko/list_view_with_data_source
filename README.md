@@ -20,7 +20,11 @@ This is an example of changing the items displayed based on the number of data e
 
 The full text of this sample can be seen in `example/lib/main/dart`.
 
-1. First, define the Sections and Items to be stored in the DataSource. It's a good idea to match these with the types of Views.
+1. Add the package to your pubspec.yaml:
+   ```
+   list_view_with_data_source: ^1.0.0
+   ```
+1. define the Sections and Items to be stored in the DataSource. It's a good idea to match these with the types of Views.
   ```
   class ProjectSection extends Equatable {
     const ProjectSection({

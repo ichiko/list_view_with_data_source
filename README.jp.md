@@ -23,7 +23,11 @@ UIKit の `UICollectionViewDataSource` の考え方を取り入れたもので�
 
 このサンプルの全文は、 `example/lib/main/dart` で見れます。
 
-1. まずDataSourceに格納する、Section と Item を定義します。これはViewの種類に対応させるとよいでしょう。
+1. `pubspec.yaml` に以下を追加します。
+   ```
+   list_view_with_data_source: ^1.0.0
+   ```
+3. DataSourceに格納する、Section と Item を定義します。これはViewの種類に対応させるとよいでしょう。
   ```
   class ProjectSection extends Equatable {
     const ProjectSection({
