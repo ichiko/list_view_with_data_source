@@ -17,20 +17,20 @@ jobs:
       - uses: dart-lang/setup-dart@v1
 
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get
 
       - name: Analyze
-        run: dart analyze --fatal-infos --fatal-warnings .
+        run: flutter analyze --fatal-infos --fatal-warnings .
       
       - name: Test
         run: flutter test --no-pub --coverage
 
       - name: Install dependencies for example
-        run: dart pub get
+        run: flutter pub get
         working-directory: example
 
       - name: Analyze example
-        run: dart analyze --fatal-infos --fatal-warnings example
+        run: flutter analyze --fatal-infos --fatal-warnings example
         working-directory: example
 
       - name: Test example
