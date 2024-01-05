@@ -1,5 +1,8 @@
 # list_view_with_data_source
 
+[![Pub Version](https://img.shields.io/pub/v/list_view_with_data_source)](https://pub.dev/packages/list_view_with_data_source)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/ichiko/list_view_with_data_source/ci.yml)
+
 A Flutter `ListView` in which list items, header, footer and separators build from section and item structured in DataSource.
 
 ## About
