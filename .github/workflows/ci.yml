@@ -16,23 +16,26 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
 
+      - name: Setup FVM
+        run: dart pub global activate fvm
+
       - name: Install dependencies
-        run: flutter pub get
+        run: fvm flutter pub get
 
       - name: Analyze
-        run: flutter analyze --fatal-infos --fatal-warnings .
+        run: fvm flutter analyze --fatal-infos --fatal-warnings .
       
       - name: Test
-        run: flutter test --no-pub --coverage
+        run: fvm flutter test --no-pub --coverage
 
       - name: Install dependencies for example
-        run: flutter pub get
+        run: fvm flutter pub get
         working-directory: example
 
       - name: Analyze example
-        run: flutter analyze --fatal-infos --fatal-warnings example
+        run: fvm flutter analyze --fatal-infos --fatal-warnings example
         working-directory: example
 
       - name: Test example
-        run: flutter test --no-pub --coverage example
+        run: fvm flutter test --no-pub --coverage example
         working-directory: example
