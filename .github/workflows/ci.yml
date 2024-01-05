@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Analyze
+        run: dart analyze --fatal-infos --fatal-warnings .
+      
+      - name: Test
+        run: flutter test --no-pub --coverage
+
+      - name: Install dependencies for example
+        run: dart pub get
+        working-directory: example
+
+      - name: Analyze example
+        run: dart analyze --fatal-infos --fatal-warnings example
+        working-directory: example
+
+      - name: Test example
+        run: flutter test --no-pub --coverage example
+        working-directory: example
