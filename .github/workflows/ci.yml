@@ -32,9 +32,9 @@ jobs:
         working-directory: example
 
       - name: Analyze example
-        run: flutter analyze --fatal-infos --fatal-warnings example
+        run: flutter analyze --fatal-infos --fatal-warnings .
         working-directory: example
 
       - name: Test example
-        run: flutter test --no-pub --coverage example
+        run: flutter test --no-pub --coverage
         working-directory: example
