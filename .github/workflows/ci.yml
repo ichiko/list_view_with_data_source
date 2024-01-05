@@ -19,22 +19,22 @@ jobs:
           channel: 'stable'
 
       - name: Install dependencies
-        run: fvm flutter pub get
+        run: flutter pub get
 
       - name: Analyze
-        run: fvm flutter analyze --fatal-infos --fatal-warnings .
+        run: flutter analyze --fatal-infos --fatal-warnings .
       
       - name: Test
-        run: fvm flutter test --no-pub --coverage
+        run: flutter test --no-pub --coverage
 
       - name: Install dependencies for example
-        run: fvm flutter pub get
+        run: flutter pub get
         working-directory: example
 
       - name: Analyze example
-        run: fvm flutter analyze --fatal-infos --fatal-warnings example
+        run: flutter analyze --fatal-infos --fatal-warnings example
         working-directory: example
 
       - name: Test example
-        run: fvm flutter test --no-pub --coverage example
+        run: flutter test --no-pub --coverage example
         working-directory: example
