@@ -7,6 +7,12 @@ import 'src/list_view_data_source_item.dart';
 
 export 'src/list_view_data_source.dart';
 
+/// Build widget used in [ListViewWithDataSource].
+/// The widget will display at head or foot of the list.
+typedef WidgetBuilder = Widget Function(
+  BuildContext context,
+);
+
 /// Build header widget used in [ListViewWithDataSource].
 /// The widget will display at head of the [section].
 /// If not needed, return null.
@@ -66,6 +72,8 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
   const ListViewWithDataSource({
     required this.dataSource,
     required this.itemBuilder,
+    this.headerBuilder,
+    this.footerBuilder,
     this.sectionHeaderBuilder,
     this.sectionFooterBuilder,
     this.itemSeparatorBuilder,
@@ -74,6 +82,10 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
     this.shrinkWrap = false,
     super.key,
   });
+
+  final WidgetBuilder? headerBuilder;
+
+  final WidgetBuilder? footerBuilder;
 
   final ListViewDataSource<SECTION, ITEM> dataSource;
 
@@ -95,10 +107,21 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final itemCount = dataSource.listItemCount +
+        (headerBuilder != null ? 1 : 0) +
+        (footerBuilder != null ? 1 : 0);
+
     return ListView.separated(
       padding: padding,
       itemBuilder: (context, index) {
-        final metaItem = dataSource.metaItem(index);
+        if (index == 0 && headerBuilder != null) {
+          return headerBuilder!(context);
+        }
+        if (index == itemCount - 1 && footerBuilder != null) {
+          return footerBuilder!(context);
+        }
+        final metaItem =
+            dataSource.metaItem(index - (headerBuilder != null ? 1 : 0));
         return switch (metaItem) {
           (final ListViewDataSourceItemSectionHeader<SECTION, ITEM>
                 headerItem) =>
@@ -126,8 +149,13 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
         };
       },
       separatorBuilder: (context, index) {
-        final metaItem = dataSource.metaItem(index);
-        final nextMetaItem = dataSource.nextMetaItem(index);
+        if (index == 0 && headerBuilder != null) {
+          return const SizedBox.shrink();
+        }
+
+        final indexInDataSource = index - (headerBuilder != null ? 1 : 0);
+        final metaItem = dataSource.metaItem(indexInDataSource);
+        final nextMetaItem = dataSource.nextMetaItem(indexInDataSource);
         return switch (metaItem) {
           (final ListViewDataSourceItemSectionHeader<SECTION, ITEM> item) =>
             nextMetaItem is ListViewDataSourceItem<SECTION, ITEM>
@@ -161,7 +189,7 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
                 const SizedBox.shrink(),
         };
       },
-      itemCount: dataSource.listItemCount,
+      itemCount: itemCount,
       shrinkWrap: shrinkWrap,
     );
   }

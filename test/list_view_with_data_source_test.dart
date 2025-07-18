@@ -24,6 +24,8 @@ void main() {
       home: Scaffold(
         body: ListViewWithDataSource<MyFavoriteCategory, MyFavoriteItems>(
           dataSource: dataSource,
+          headerBuilder: (context) => const Text('Header of list'),
+          footerBuilder: (context) => const Text('Footer of list'),
           sectionHeaderBuilder: (context, section, sectionIndex) {
             return Text('Header of section: $section');
           },
@@ -46,13 +48,14 @@ void main() {
     );
   }
 
-  Widget buildAppWithSectionHeaderAndItem(
+  Widget buildAppWithSectionHeaderAndItemWithHeaderOfList(
     ListViewDataSource<MyFavoriteCategory, MyFavoriteItems> dataSource,
   ) {
     return MaterialApp(
       home: Scaffold(
         body: ListViewWithDataSource<MyFavoriteCategory, MyFavoriteItems>(
           dataSource: dataSource,
+          headerBuilder: (context) => const Text('Header of list'),
           sectionHeaderBuilder: (context, section, sectionIndex) {
             return Text('Header of section: $section');
           },
@@ -64,13 +67,14 @@ void main() {
     );
   }
 
-  Widget buildAppWithFruitsHeaderAndInstrumentsFooter(
+  Widget buildAppWithFruitsHeaderAndInstrumentsFooterWithFooterOfList(
     ListViewDataSource<MyFavoriteCategory, MyFavoriteItems> dataSource,
   ) {
     return MaterialApp(
       home: Scaffold(
         body: ListViewWithDataSource<MyFavoriteCategory, MyFavoriteItems>(
           dataSource: dataSource,
+          footerBuilder: (context) => const Text('Footer of list'),
           sectionHeaderBuilder: (context, section, sectionIndex) {
             if (section == MyFavoriteCategory.fruits) {
               return Text('Header of section: $section');
@@ -98,11 +102,13 @@ void main() {
 
     await tester.pumpWidget(buildAppWithAllView(dataSource));
 
+    expect(find.text('Header of list'), findsOneWidget);
     expect(find.text('Header of section: MyFavoriteCategory.fruits'),
         findsOneWidget);
     expect(find.text('Item: MyFavoriteItems.apple'), findsOneWidget);
     expect(find.text('Footer of section: MyFavoriteCategory.fruits'),
         findsOneWidget);
+    expect(find.text('Footer of list'), findsOneWidget);
   });
 
   testWidgets('Build sections with multiple items and build header and item',
@@ -116,8 +122,10 @@ void main() {
       ..addSection(MyFavoriteCategory.instruments)
       ..appendItems(MyFavoriteCategory.instruments, [MyFavoriteItems.guitar]);
 
-    await tester.pumpWidget(buildAppWithSectionHeaderAndItem(dataSource));
+    await tester.pumpWidget(
+        buildAppWithSectionHeaderAndItemWithHeaderOfList(dataSource));
 
+    expect(find.text('Header of list'), findsOneWidget);
     expect(find.text('Header of section: MyFavoriteCategory.fruits'),
         findsOneWidget);
     expect(find.text('Item: MyFavoriteItems.apple'), findsOneWidget);
@@ -144,8 +152,9 @@ void main() {
       ..addSection(MyFavoriteCategory.instruments)
       ..appendItems(MyFavoriteCategory.instruments, [MyFavoriteItems.guitar]);
 
-    await tester
-        .pumpWidget(buildAppWithFruitsHeaderAndInstrumentsFooter(dataSource));
+    await tester.pumpWidget(
+        buildAppWithFruitsHeaderAndInstrumentsFooterWithFooterOfList(
+            dataSource));
 
     expect(find.text('Header of section: MyFavoriteCategory.fruits'),
         findsOneWidget);
@@ -159,5 +168,6 @@ void main() {
     expect(find.text('Item: MyFavoriteItems.guitar'), findsOneWidget);
     expect(find.text('Footer of section: MyFavoriteCategory.instruments'),
         findsOneWidget);
+    expect(find.text('Footer of list'), findsOneWidget);
   });
 }
