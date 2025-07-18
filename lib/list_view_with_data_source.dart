@@ -80,6 +80,7 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
     this.sectionSeparatorBuilder,
     this.padding,
     this.shrinkWrap = false,
+    this.physics,
     super.key,
   });
 
@@ -104,6 +105,9 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
 
   /// Same as [ListView.shrinkWrap].
   final bool shrinkWrap;
+
+  /// Same as [ListView.physics].
+  final ScrollPhysics? physics;
 
   @override
   Widget build(BuildContext context) {
@@ -191,6 +195,7 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
       },
       itemCount: itemCount,
       shrinkWrap: shrinkWrap,
+      physics: physics,
     );
   }
 }
