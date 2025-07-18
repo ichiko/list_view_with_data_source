@@ -171,85 +171,80 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('ListView With Data Source Example'),
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  const Text('Tasks filter:'),
-                  const SizedBox(width: 8),
-                  DropdownButton<Filter>(
-                    value: _filter,
-                    onChanged: (Filter? newValue) {
-                      setState(() {
-                        _filter = newValue!;
-                      });
-                    },
-                    items: Filter.values
-                        .map<DropdownMenuItem<Filter>>((Filter value) {
-                      return DropdownMenuItem<Filter>(
-                        value: value,
-                        child: Text(
-                          value.name,
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListViewWithDataSource(
-                dataSource: _model.dataSourceFor(_filter),
-                itemBuilder:
-                    (context, section, item, sectionIndex, itemIndex) =>
-                        switch (item) {
-                  (final TaskItem item) => ListTile(
-                      title: Text(item.title),
-                      subtitle: Text(item.subtitle),
-                      trailing:
-                          item.task.isComplete ? const Icon(Icons.check) : null,
-                    ),
-                  (final EmptyItem item) => ListTile(
-                      title: Text(item.title),
-                    ),
+      appBar: AppBar(
+        title: const Text('ListView With Data Source Example'),
+      ),
+      body: ListViewWithDataSource(
+        headerBuilder: (context) => Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          color: Colors.grey,
+          child: Row(
+            children: [
+              const Text('Tasks filter:'),
+              const SizedBox(width: 8),
+              DropdownButton<Filter>(
+                value: _filter,
+                onChanged: (Filter? newValue) {
+                  setState(() {
+                    _filter = newValue!;
+                  });
                 },
-                sectionHeaderBuilder: (context, section, sectionIndex) =>
-                    ListTile(
-                  title: Text(
-                    section.title,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                sectionFooterBuilder: (context, section, sectionIndex) =>
-                    0 < section.itemCount
-                        ? Row(
-                            children: [
-                              const Spacer(),
-                              Text(section.trailing),
-                              const SizedBox(width: 16),
-                            ],
-                          )
-                        : null,
-                itemSeparatorBuilder:
-                    (context, section, item, sectionIndex, itemIndex,
-                            {required bool insideSection}) =>
-                        const Divider(indent: 16),
-                sectionSeparatorBuilder: (context, section, sectionIndex) =>
-                    const Padding(
-                  padding: EdgeInsets.only(top: 16),
-                  child: Divider(),
-                ),
+                items:
+                    Filter.values.map<DropdownMenuItem<Filter>>((Filter value) {
+                  return DropdownMenuItem<Filter>(
+                    value: value,
+                    child: Text(
+                      value.name,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  );
+                }).toList(),
               ),
+            ],
+          ),
+        ),
+        footerBuilder: (context) => const Padding(
+          padding: EdgeInsets.all(32),
+          child: Text('Footer'),
+        ),
+        dataSource: _model.dataSourceFor(_filter),
+        itemBuilder: (context, section, item, sectionIndex, itemIndex) =>
+            switch (item) {
+          (final TaskItem item) => ListTile(
+              title: Text(item.title),
+              subtitle: Text(item.subtitle),
+              trailing: item.task.isComplete ? const Icon(Icons.check) : null,
             ),
-          ],
-        ));
+          (final EmptyItem item) => ListTile(
+              title: Text(item.title),
+            ),
+        },
+        sectionHeaderBuilder: (context, section, sectionIndex) => ListTile(
+          title: Text(
+            section.title,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+        sectionFooterBuilder: (context, section, sectionIndex) =>
+            0 < section.itemCount
+                ? Row(
+                    children: [
+                      const Spacer(),
+                      Text(section.trailing),
+                      const SizedBox(width: 16),
+                    ],
+                  )
+                : null,
+        itemSeparatorBuilder: (context, section, item, sectionIndex, itemIndex,
+                {required bool insideSection}) =>
+            const Divider(indent: 16),
+        sectionSeparatorBuilder: (context, section, sectionIndex) =>
+            const Padding(
+          padding: EdgeInsets.only(top: 16),
+          child: Divider(),
+        ),
+      ),
+    );
   }
 }
 
