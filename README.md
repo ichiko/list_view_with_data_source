@@ -16,6 +16,7 @@ The differences from [grouped_list](https://pub.dev/packages/grouped_list), whic
 - By not automating group construction, it can express more complex switches
 - Headers/footers/group separator Widgets can be set individually
 - By separating the display structure and Widget construction, the structure itself can be verified
+- Enable show header/footer of list
 
 ## Example
 
