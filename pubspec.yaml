@@ -1,6 +1,6 @@
 name: list_view_with_data_source
 description: "Build ListView via DataSource that separated from UI"
-version: 1.0.1
+version: 1.1.0
 repository: https://github.com/ichiko/list_view_with_data_source
 
 environment:
