@@ -160,9 +160,11 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
         final indexInDataSource = index - (headerBuilder != null ? 1 : 0);
         final metaItem = dataSource.metaItem(indexInDataSource);
         final nextMetaItem = dataSource.nextMetaItem(indexInDataSource);
+
         return switch (metaItem) {
           (final ListViewDataSourceItemSectionHeader<SECTION, ITEM> item) =>
-            nextMetaItem is ListViewDataSourceItem<SECTION, ITEM>
+            nextMetaItem is ListViewDataSourceItem<SECTION, ITEM> &&
+                    sectionHeaderBuilder != null
                 ? itemSeparatorBuilder?.call(
                       context,
                       item.section,
@@ -185,12 +187,14 @@ final class ListViewWithDataSource<SECTION, ITEM> extends StatelessWidget {
                 ) ??
                 const SizedBox.shrink(),
           (final ListViewDataSourceItemSectionFooter<SECTION, ITEM> item) =>
-            sectionSeparatorBuilder?.call(
-                  context,
-                  item.section,
-                  item.sectionIndex,
-                ) ??
-                const SizedBox.shrink(),
+            sectionFooterBuilder != null && nextMetaItem != null
+                ? sectionSeparatorBuilder?.call(
+                      context,
+                      item.section,
+                      item.sectionIndex,
+                    ) ??
+                    const SizedBox.shrink()
+                : const SizedBox.shrink(),
         };
       },
       itemCount: itemCount,
