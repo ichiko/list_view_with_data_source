@@ -95,6 +95,27 @@ void main() {
     );
   }
 
+  Widget buildAppWithFooterOnly(
+    ListViewDataSource<MyFavoriteCategory, MyFavoriteItems> dataSource,
+  ) {
+    return MaterialApp(
+      home: Scaffold(
+        body: ListViewWithDataSource<MyFavoriteCategory, MyFavoriteItems>(
+          dataSource: dataSource,
+          itemBuilder: (context, section, item, sectionIndex, itemIndex) {
+            return Text('Item: $item');
+          },
+          itemSeparatorBuilder:
+              (context, section, item, sectionIndex, itemIndex,
+                  {required insideSection}) {
+            return Text('Separator: $sectionIndex, $itemIndex, $insideSection');
+          },
+          footerBuilder: (context) => const Text('Footer of list'),
+        ),
+      ),
+    );
+  }
+
   testWidgets('Build section with items', (tester) async {
     final dataSource = ListViewDataSource<MyFavoriteCategory, MyFavoriteItems>()
       ..addSection(MyFavoriteCategory.fruits)
@@ -168,6 +189,23 @@ void main() {
     expect(find.text('Item: MyFavoriteItems.guitar'), findsOneWidget);
     expect(find.text('Footer of section: MyFavoriteCategory.instruments'),
         findsOneWidget);
+    expect(find.text('Footer of list'), findsOneWidget);
+  });
+
+  testWidgets('Build one item and footer only', (tester) async {
+    final dataSource = ListViewDataSource<MyFavoriteCategory, MyFavoriteItems>()
+      ..addSection(MyFavoriteCategory.fruits)
+      ..appendItems(MyFavoriteCategory.fruits, [MyFavoriteItems.apple]);
+
+    await tester.pumpWidget(buildAppWithFooterOnly(dataSource));
+
+    expect(find.text('Header of list'), findsNothing);
+    expect(find.text('Header of section: MyFavoriteCategory.fruits'),
+        findsNothing);
+    // ヘッダー類が一切ない場合にも、最初のアイテムの前にセパレーターが表示される不具合
+    expect(find.text('Separator: 0, null, false'), findsNothing);
+    expect(find.text('Item: MyFavoriteItems.apple'), findsOneWidget);
+    expect(find.text('Separator: 0, 0, false'), findsOneWidget);
     expect(find.text('Footer of list'), findsOneWidget);
   });
 }
