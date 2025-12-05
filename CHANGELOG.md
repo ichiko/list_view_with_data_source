@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.1.1
+
 * [fix] unexpected item separator, that placed before first item without section header or after last section footter.
 
 ## 1.1.0
