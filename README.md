@@ -26,7 +26,7 @@ The full text of this sample can be seen in `example/lib/main/dart`.
 
 1. Add the package to your pubspec.yaml:
    ```
-   list_view_with_data_source: ^1.0.0
+   list_view_with_data_source: ^1.1.1
    ```
 1. define the Sections and Items to be stored in the DataSource. It's a good idea to match these with the types of Views.
   ```
